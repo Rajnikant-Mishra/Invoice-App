@@ -1,16 +1,37 @@
-// import React, { useState } from "react";
-// import "./Login.css";
-// import { FcGoogle } from "react-icons/fc";
-// import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
-// import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import Axios from "axios";
 import "./Login.css";
+import { Link, useNavigate } from "react-router-dom";
+
 // import Invoices from "./Invoices";
 export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
+  Axios.defaults.withCredentials = true;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    Axios.post("http://localhost:3000/auth/login", {
+      email,
+      password,
+    })
+      .then((response) => {
+        if (response.data.status) {
+          navigate("/invoices");
+        } else {
+          setErrorMessage(response.data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const TogglePassword = () => {
     setPasswordVisible(!passwordVisible);
@@ -45,10 +66,10 @@ export default function Login() {
             </ul>
 
             <div class="text-end">
-              <Link to="/Invoices" type="button" class="btn registerbtn ">
+              {/* <Link to="/Invoices" type="button" class="btn registerbtn ">
                 <FaUser />
                 Invoice
-              </Link>
+              </Link> */}
               <Link to="/" type="button" class="btn registerbtn ">
                 <FaUser />
                 Register
@@ -58,9 +79,10 @@ export default function Login() {
         </div>
       </header>
       <div className="rightdiv col-lg-12 col-md-12 col-sm-12 ">
-        <div className="align-middle mt-5 formdiv px-4 px-md-5">
+        <div className="align-middle mt-3 formdiv px-4 px-md-5">
+          {errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
           <h3>Login to your Refrens account</h3>
-          <form className="my-auto">
+          <form onSubmit={handleSubmit} className="my-auto">
             <button type="button" className="btn google">
               <FcGoogle /> Continue with Google
             </button>
@@ -74,12 +96,18 @@ export default function Login() {
                 Your Email <sup>*</sup>
               </label>
               <div className="col-sm-12">
-                <input type="email" className="form-control" id="email" />
+                <input
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
             </div>
             <div className="mb-1 column position-relative">
               <label
-                htmlFor="exampleInputPassword1"
+                htmlFor="exampleInputPassword2"
                 className="col-sm-12 col-form-label"
               >
                 Password <sup>*</sup>
@@ -88,9 +116,11 @@ export default function Login() {
                 <input
                   type={passwordVisible ? "text" : "password"}
                   className="form-control"
-                  id="exampleInputPassword1"
+                  id="exampleInputPassword2"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                <div className="password-icon" onClick={TogglePassword}>
+                <div className="password-icon1" onClick={TogglePassword}>
                   {passwordVisible ? <FaEyeSlash /> : <FaEye />}
                 </div>
               </div>
@@ -100,9 +130,9 @@ export default function Login() {
               Create Account
             </button>
           </form>
-          <p className="formLinkSentence mt-3">
+          {/* <p className="formLinkSentence mt-3">
             Having issues logging in? <a class="pageLink">Click here</a>
-          </p>
+          </p> */}
           <p className="formLinkSentence mt-3">
             Don't have an account?{" "}
             <Link to="/" class="pageLink">

@@ -46,7 +46,7 @@ button.btn.google {
   margin-bottom: 20px;
 }
 
-.registerdiv .password-icon {
+/* .registerdiv .password-icon {
   cursor: pointer;
   right: 25px;
   top: 50%;
@@ -54,8 +54,15 @@ button.btn.google {
   position: absolute;
   background-color: transparent;
   border: none;
+} */
+input#exampleInputPassword1 {
+  position: relative;
 }
-
+.password-icon {
+  position: absolute;
+  top: 25%;
+  right: 6%;
+}
 button.btn.submit {
   background-color: #7038d6;
   width: 100%;
@@ -189,3 +196,9 @@ input.form-control,
 }
 
 /* cherck */
+
+/* //input validation */
+.input-valid{
+  color: red;
+    /* margin-right: 138px; */
+}

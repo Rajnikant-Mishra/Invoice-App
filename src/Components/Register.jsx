@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import Axios from "axios";
+import "./Register.css";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaEye,
   FaEyeSlash,
@@ -10,55 +13,44 @@ import {
   FaAngleDown,
   FaAngleUp,
 } from "react-icons/fa";
-import "./Register.css";
 
 export default function Register() {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [country, setCountry] = useState([]);
-  const [filteredCountries, setFilteredCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("India"); // Default selection to India
-  const [countryCode, setCountryCode] = useState("in"); // Default country code for India
-  const [showOptions, setShowOptions] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [valid, setValid] = useState(true);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const [error, setError] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const res = await fetch(
-          "https://restcountries.com/v3.1/all?fields=name,cca2"
-        );
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    Axios.post("http://localhost:3000/auth/", {
+      username,
+      email,
+      password,
+    })
+      .then((response) => {
+        if (response.data.status) {
+          setRegistrationSuccess(true);
+          setErrorMessage("");
+          setTimeout(() => {
+            navigate("/");
+          }, 3000); // Redirect after 3 seconds
+        } else {
+          setRegistrationSuccess(false);
+          setErrorMessage(response.data.message);
         }
-        const data = await res.json();
-        setCountry(data);
-        setFilteredCountries(data); // Initialize filteredCountries with all countries
-      } catch (error) {
-        console.error("Failed to fetch countries:", error);
-      }
-    };
-    fetchCountries();
-  }, []);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const TogglePassword = () => {
     setPasswordVisible(!passwordVisible);
-  };
-
-  const handleCountrySelect = (name, code) => {
-    setSelectedCountry(name);
-    setCountryCode(code.toLowerCase());
-    setShowOptions(false);
-  };
-
-  const handlePhoneNumberChange = (input) => {
-    setPhoneNumber(input);
-    setValid(validatePhoneNumber(input));
-  };
-
-  const validatePhoneNumber = (phoneNumber) => {
-    const phoneNumberPattern = /^\d{10}$/;
-    return phoneNumberPattern.test(phoneNumber);
   };
 
   return (
@@ -77,7 +69,7 @@ export default function Register() {
           Join thousands of freelancers and businesses to grow your business
         </h6>
       </div>
-      <div className="rightdiv col-lg-7 col-md-7 col-sm-12 text-center">
+      <div className="rightdiv col-lg-7 col-md-7 col-sm-12 ">
         <header className="p-3 text-white">
           <div className="container">
             <div className="d-flex flex-wrap align-items-center justify-content-between">
@@ -104,8 +96,20 @@ export default function Register() {
           </div>
         </header>
         <div className="align-middle mt-5 formdiv px-4 px-md-5 mx-auto">
-          <h3>Sign Up on Refrens</h3>
-          <form className="my-auto">
+          {registrationSuccess && (
+            <div className="alert alert-success mt-3" role="alert">
+              Account Created successful! Go to login page...
+            </div>
+          )}
+          {errorMessage && (
+            <div className="alert alert-danger mt-3" role="alert">
+              {errorMessage}
+            </div>
+          )}
+          <div className="d-flex justify-content-center">
+            <h3>Sign Up on Refrens</h3>
+          </div>
+          <form onSubmit={handleSubmit} className="my-auto">
             <button type="button" className="btn google">
               <FcGoogle /> Continue with Google
             </button>
@@ -114,43 +118,7 @@ export default function Register() {
               <span className="px-2">OR</span>
               <hr className="flex-grow-1" />
             </div>
-            <div className="mb-3 row position-relative">
-              <label htmlFor="country" className="col-sm-4 col-form-label">
-                Country <sup>*</sup>
-              </label>
-              <div className="col-sm-8 position-relative">
-                <div
-                  className="input-group"
-                  onClick={() => setShowOptions(!showOptions)}
-                >
-                  <select
-                    className="form-control"
-                    id="country"
-                    value={selectedCountry}
-                    onChange={(e) => {
-                      const selectedCountry = filteredCountries.find(
-                        (data) => data.name.common === e.target.value
-                      );
-                      handleCountrySelect(
-                        selectedCountry.name.common,
-                        selectedCountry.cca2
-                      );
-                    }}
-                    onFocus={() => setShowOptions(true)}
-                    onBlur={() => setShowOptions(false)}
-                  >
-                    {filteredCountries.map((data) => (
-                      <option key={data.cca2} value={data.name.common}>
-                        {data.name.common}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="password-icon">
-                    {showOptions ? <FaAngleUp /> : <FaAngleDown />}
-                  </div>
-                </div>
-              </div>
-            </div>
+
             <div className="mb-3 row">
               <label
                 htmlFor="yournameInput"
@@ -163,6 +131,8 @@ export default function Register() {
                   type="text"
                   className="form-control"
                   id="yournameInput"
+                  required
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
             </div>
@@ -171,29 +141,16 @@ export default function Register() {
                 Your Email <sup>*</sup>
               </label>
               <div className="col-sm-8">
-                <input type="email" className="form-control" id="email" />
+                <input
+                  type="email"
+                  className="form-control"
+                  required
+                  id="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
             </div>
-            <div className="mb-3 row">
-              <label htmlFor="phoneNo" className="col-sm-4 col-form-label">
-                Phone <sup>*</sup>
-              </label>
-              <div className="col-sm-8">
-                <div className="input-group">
-                  <PhoneInput
-                    country={countryCode}
-                    value={phoneNumber}
-                    onChange={handlePhoneNumberChange}
-                    containerClass="react-phone-input"
-                    inputClass="form-control"
-                    inputProps={{ required: true }}
-                  />
-                </div>
-                {!valid && (
-                  <div className="invalid-feedback">Invalid phone number</div>
-                )}
-              </div>
-            </div>
+
             <div className="mb-3 row position-relative">
               <label
                 htmlFor="exampleInputPassword1"
@@ -206,7 +163,10 @@ export default function Register() {
                   type={passwordVisible ? "text" : "password"}
                   className="form-control"
                   id="exampleInputPassword1"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
                 />
+
                 <div className="password-icon" onClick={TogglePassword}>
                   {passwordVisible ? <FaEyeSlash /> : <FaEye />}
                 </div>
@@ -224,12 +184,11 @@ export default function Register() {
                 <span className="pageLink">Privacy Policy</span>
               </label>
             </div>
-            <button type="submit" className="btn submit">
-              Create Account
-            </button>
+            <button className="submit btn">Create Account</button>
           </form>
+
           <p className="formLinkSentence mt-3">
-            Already a user?{" "}
+            Have an account ?{" "}
             <Link to="/login" id="pageLink">
               Login here
             </Link>

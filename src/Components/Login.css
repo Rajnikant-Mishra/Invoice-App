@@ -47,7 +47,7 @@ button.btn.google {
   margin-bottom: 20px;
 }
 
-.password-icon {
+/* .password-icon {
   cursor: pointer;
   right: 25px;
   top: 70%;
@@ -55,8 +55,16 @@ button.btn.google {
   position: absolute;
   background-color: transparent;
   border: none;
+} */
+ 
+input#exampleInputPassword2 {
+  position: relative;
 }
-
+.password-icon1 {
+  position: absolute;
+  top: 65%;
+  right: 6%;
+}
 button.btn.submit {
   background-color: #7038d6;
   width: 100%;

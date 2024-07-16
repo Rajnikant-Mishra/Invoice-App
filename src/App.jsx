@@ -1,30 +1,19 @@
-import React, { useState } from "react";
-import Register from "./Components/Register";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./Components/Login";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Invoices from "./Components/Invoices";
-// import "./App.css";
+import Register from "./Components/Register";
+import Invoices from "./Components/Invoices"; // Create an Invoices component to display invoices
 
 function App() {
-  const route = createBrowserRouter([
-    {
-      path: "/",
-      element: <Register />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/invoices",
-      element: <Invoices />,
-    },
-  ]);
   return (
-    <>
-      <RouterProvider router={route} />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Register />} />
+        <Route path="/invoices" element={<Invoices />} />
+      </Routes>
+    </Router>
   );
 }
 
