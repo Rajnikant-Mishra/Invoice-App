@@ -1,0 +1,404 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f9f9f9;
+}
+
+.container {
+  max-width: 90%;
+  margin: auto;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  border: none;
+  border-bottom: 2px solid #5c5b5e;
+  border-radius: 0px;
+}
+
+.form-control:focus {
+  border: none;
+  border-bottom: 2px solid #7038d6;
+  border-radius: 0px;
+}
+
+.submitbtn,
+.addbtn {
+  width: 100%;
+  background-color: #7038d6;
+  color: white;
+  margin-top: 10px;
+}
+
+.submitbtn:hover,
+.addbtn:hover {
+  border: 1px solid #7038d6;
+  color: #7038d6;
+  background-color: #6f38d63f;
+}
+
+.addbtn {
+  width: 100%;
+}
+
+.logoUpload {
+  position: relative;
+  width: 100%;
+  max-width: 150px;
+  height: 100px;
+  border: 2px dashed #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.uploadLogo {
+  color: #7038d6;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.logoPreview {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.logoPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.overlay button {
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  color: #7038d6;
+  cursor: pointer;
+}
+.upsignature {
+  flex-direction: row;
+}
+.signatureup {
+  max-width: 100%;
+  height: 150px;
+}
+/* tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  border: none;
+} */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 25px;
+}
+.table-header-row Th,
+Td {
+  padding: 10px;
+}
+.table-header-row {
+  background-color: #7038d6 !important;
+  color: white;
+}
+
+.amount-cell {
+  display: flex;
+  align-items: center;
+  padding: 17px 0px !important;
+  justify-content: center;
+}
+
+.delete-icon {
+  color: #7038d6;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: #8f63df;
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 70%;
+  }
+
+  .card-body {
+    padding: 40px;
+  }
+
+  .submitbtn,
+  .addbtn {
+    width: auto;
+  }
+}
+
+@media (max-width: 991px) {
+  .card-body {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  .form-control {
+    font-size: 14px;
+  }
+
+  .submitbtn,
+  .addbtn {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+.currency-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.currency-symbol {
+  height: 37px !important;
+}
+input.chakra-input.ps-3.css-0 {
+  border-top: none !important;
+  outline: none !important;
+  border-bottom: 2px solid #5c5b5e;
+}
+
+.css-1u2k0bl {
+  top: 24% !important;
+}
+.form-control {
+  padding-left: 15px;
+  border: none;
+  border-bottom: 2px solid #5c5b5e;
+  border-radius: 0px;
+}
+
+.form-control:focus {
+  border: none;
+  border-bottom: 2px solid #7038d6;
+  border-radius: 0px;
+}
+.signature-canvas {
+  width: 100%;
+  height: 200px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+input.form-control,
+.react-tel-input .form-control,
+.react-tel-input input[type="tel"] {
+  height: 38px;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid black;
+  border-radius: 0px !important;
+}
+.react-tel-input .flag-dropdown {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  background-color: white;
+  border: 0px;
+  border-bottom: 1px solid black;
+  border-radius: 0px !important;
+}
+.form-check-input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+}
+#country {
+  border-radius: 0px;
+}
+#flexCheckDefault {
+  border: 1px solid #5c5b5e;
+}
+.transportCross {
+  color: #919092;
+}
+.transportCross:hover {
+  color: #7038d6;
+}
+.uploadSignatureBtn {
+  width: 100%;
+}
+/* .modalContainer {
+} */
+section#chakra-modal-\:r3\: {
+  width: 30%;
+  background-color: #fcfcfc;
+  height: 450px;
+  z-index: 9;
+  left: 30%;
+  top: 10%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.Title {
+  font-size: 24px;
+  width: 50%;
+  padding-left: 20px;
+  padding-top: 20px;
+  font-weight: 600;
+}
+.ModalCloseIcon {
+  justify-content: end !important;
+  width: 100%;
+  margin-top: -6%;
+  padding-right: 20px;
+}
+.modalBody {
+  padding: 20px;
+}
+.modalCloseBtn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.ModalUploadBtn {
+  background-color: #7038d6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.modalFooter {
+  display: flex;
+  justify-content: space-between !important;
+  margin: 20px;
+}
+.resetSignature {
+  align-items: center;
+  cursor: pointer;
+}
+.resetSignature:hover {
+  color: #7038d6;
+  width: 100%;
+}
+.formBox p {
+  display: flex;
+}
+.discountInput {
+  height: 36px;
+}
+.discountInput input {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding-left: 13px;
+}
+.discountInput select {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.discountInput select option {
+  color: black;
+}
+.calculationDiv p:hover {
+  color: #7038d6;
+  cursor: pointer;
+}
+
+select:hover {
+  cursor: pointer;
+}
+.roundOn,
+.roundOff {
+  height: 36px;
+  border-radius: 5px !important;
+  padding-left: 13px;
+}
+.css-1hv8oq8-MuiStepLabel-label {
+  font-size: 18px !important;
+  font-weight: 500;
+}
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+  color: none !important;
+  color: #7038d6 !important;
+  height: 50px;
+  width: 50px;
+}
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
+  height: 50px !important;
+  width: 50px !important;
+}
+.backBtn,
+.nextBtn {
+  outline: none;
+  border: none;
+  width: auto;
+  background-color: none !important;
+  color: #7038d6;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+.iconBox {
+  background-color: #cfbfee;
+  width: auto;
+  width: 70px;
+  height: 70px;
+}
+.pig {
+  color: #7038d6;
+  margin-top: 14%;
+}
+.bankContainer {
+  background-color: #6f38d61e;
+}

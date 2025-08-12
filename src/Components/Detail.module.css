@@ -1,0 +1,74 @@
+.select {
+  width: 98%;
+}
+.form {
+  padding: 0px 20px 0px 0px;
+}
+.inputContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.textField {
+  flex: 1;
+}
+
+.iconContainer {
+  width: 48px;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-top: 35px;
+}
+.icon {
+  color: #7038d6;
+}
+.icon:hover {
+  cursor: pointer;
+  color: #9a7cd1;
+}
+.addMoreIcon {
+  color: #7038d6;
+}
+.addMoreP {
+  cursor: pointer;
+}
+.crossIconContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.crossIcon {
+  cursor: pointer;
+  color: #7038d6;
+  transition: color 0.3s ease;
+}
+
+.crossIcon:hover {
+  color: #9a7cd1;
+}
+
+.dropdownContainer {
+  border: 1px solid #ccc;
+  max-height: auto;
+  overflow-y: auto;
+  padding: 5px;
+  background-color: white;
+  position: absolute;
+  width: 200px;
+  z-index: 1000;
+  top: 45%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdownItem:hover {
+  background-color: #7038d6;
+  color: white;
+}

@@ -1,0 +1,10 @@
+.invoice-nav {
+  background-color: #7038d6;
+}
+.dropdown-menu a:hover {
+  background-color: #7038d6;
+  color: white;
+}
+.dropdown-menu {
+  padding: 0px;
+}

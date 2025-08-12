@@ -39,15 +39,15 @@ export default function Login() {
 
   return (
     <div className="logindiv container-fluid d-flex flex-wrap">
-      <header class="p-3  text-white">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <header className="p-3  text-white">
+        <div className="container">
+          <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a
               href="https://img.freepik.com/free-vector/leaf-maple-icon-logo-design_474888-2154.jpg?size=338&ext=jpg"
-              class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
+              className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
             >
               <svg
-                class="bi me-2"
+                className="bi me-2"
                 width="40"
                 height="32"
                 role="img"
@@ -57,20 +57,26 @@ export default function Login() {
               </svg>
             </a>
 
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li>
-                <a href="#" class="nav-link px-2 text-secondary">
-                  Home
-                </a>
+                <a href="#" className="nav-link px-2 text-secondary"></a>
               </li>
             </ul>
 
-            <div class="text-end">
-              {/* <Link to="/Invoices" type="button" class="btn registerbtn ">
+            <div className="text-end">
+              <Link
+                to="/MailSignature"
+                type="button"
+                className="btn registerbtn "
+              >
+                <FaUser />
+                Mail Signature
+              </Link>
+              <Link to="/Invoices" type="button" className="btn registerbtn ">
                 <FaUser />
                 Invoice
-              </Link> */}
-              <Link to="/" type="button" class="btn registerbtn ">
+              </Link>
+              <Link to="/" type="button" className="btn registerbtn ">
                 <FaUser />
                 Register
               </Link>
@@ -135,7 +141,7 @@ export default function Login() {
           </p> */}
           <p className="formLinkSentence mt-3">
             Don't have an account?{" "}
-            <Link to="/" class="pageLink">
+            <Link to="/" className="pageLink">
               Signup now
             </Link>
           </p>
