@@ -178,6 +178,12 @@ const MailSignature = () => {
     { id: "modern", name: "Modern", layout: "vertical" },
     { id: "minimal", name: "Minimal", layout: "compact" },
     { id: "video", name: "Video", layout: "horizontal-with-video" },
+    { id: "professional", name: "Professional", layout: "two-column" },
+    { id: "stacked", name: "Stacked", layout: "stacked-column" },
+    { id: "banner-focused", name: "Banner-Focused", layout: "banner-priority" },
+    { id: "without-icon-bg", name: "without-icon-bg", layout: "icon-without-bg" },
+    { id: "with-icon-bg", name: "with-icon-bg", layout: "icon-with-bg" },
+    { id: "solid-icon", name: "solid-icon", layout: "icon-without-bg" },
   ];
 
   const handleAddField = (field) => {
@@ -314,7 +320,7 @@ const MailSignature = () => {
       fontFamily: designOptions.fontFamily,
       fontSize: `${designOptions.fontSize}px`,
       color: designOptions.primaryColor,
-      textAlign: selectedTemplate === "modern" ? "center" : "left",
+      textAlign: selectedTemplate === "modern" || selectedTemplate === "professional" ? "center" : "left",
     };
 
     const nameStyle = designOptions.boldName ? { fontWeight: "bold" } : {};
@@ -330,37 +336,161 @@ const MailSignature = () => {
       case "video":
         layoutClass = "d-flex gap-3 flex-row ";
         break;
+      case "professional":
+        layoutClass = "d-flex gap-4 align-items-center";
+        break;
+      case "stacked":
+        layoutClass = "d-flex flex-column align-items-center text-center gap-3";
+        break;
+      case "split":
+        layoutClass = "d-flex align-items-center gap-4";
+        break;
+      case "banner-focused":
+      case "without-icon-bg":
+      case "with-icon-bg":
+      case "solid-icon":
+        layoutClass = "d-flex flex-column align-items-center gap-2";
+        break;
       default:
         layoutClass = "d-flex gap-3 align-items-start";
     }
 
+    let socialIconsClass = `social-icons d-flex ${
+      selectedTemplate === "modern" ||
+      selectedTemplate === "professional" ||
+      selectedTemplate === "stacked" ||
+      selectedTemplate === "banner-focused" ||
+      selectedTemplate === "without-icon-bg" ||
+      selectedTemplate === "with-icon-bg" ||
+      selectedTemplate === "solid-icon"
+        ? "justify-content-center"
+        : "gap-2"
+    } mt-2`;
+
     return (
       <div className={`card carddiv`} style={style}>
-        <div className={`card-content ${layoutClass} `} style={{ width: "100%" }}>
+        <div className={`card-content ${layoutClass}`} style={{ width: "100%" }}>
           {signaturePreviewUrl && (
-            <div className={selectedTemplate === "modern" ? "mb-3" : "col-md-3"} style={{ textAlign: selectedTemplate === "modern" ? "center" : "left" }}>
+            <div
+              className={
+                selectedTemplate === "modern" ||
+                selectedTemplate === "stacked" ||
+                selectedTemplate === "banner-focused" ||
+                selectedTemplate === "without-icon-bg" ||
+                selectedTemplate === "with-icon-bg" ||
+                selectedTemplate === "solid-icon"
+                  ? "mb-3"
+                  : selectedTemplate === "professional"
+                  ? "col-md-4"
+                  : selectedTemplate === "split"
+                  ? "col-md-6"
+                  : "col-md-3"
+              }
+              style={{
+                textAlign:
+                  selectedTemplate === "modern" ||
+                  selectedTemplate === "stacked" ||
+                  selectedTemplate === "banner-focused" ||
+                  selectedTemplate === "without-icon-bg" ||
+                  selectedTemplate === "with-icon-bg" ||
+                  selectedTemplate === "solid-icon"
+                    ? "center"
+                    : "left",
+              }}
+            >
               <img
                 src={signaturePreviewUrl}
                 alt="Signature Preview"
                 className="img-fluid"
                 style={{
                   borderRadius: imageShape === "circle" ? "50%" : "0",
-                  height: "150px",
-                  width: "150px",
-                  margin: selectedTemplate === "modern" ? "0 auto" : "0",
+                  height: selectedTemplate === "professional" ? "200px" : "150px",
+                  width: selectedTemplate === "professional" ? "200px" : "150px",
+                  margin:
+                    selectedTemplate === "modern" ||
+                    selectedTemplate === "stacked" ||
+                    selectedTemplate === "banner-focused" ||
+                    selectedTemplate === "without-icon-bg" ||
+                    selectedTemplate === "with-icon-bg" ||
+                    selectedTemplate === "solid-icon"
+                      ? "0 auto"
+                      : "0",
                 }}
               />
             </div>
           )}
-          <div className={`${selectedTemplate === "modern" ? "" : "col-md-8"} my-auto`} style={{ width: selectedTemplate === "modern" ? "100%" : "auto" }}>
-            <h3 className="mb-2" style={{ ...nameStyle, textAlign: selectedTemplate === "modern" ? "center" : "left" }}>
+          <div
+            className={
+              selectedTemplate === "modern" ||
+              selectedTemplate === "stacked" ||
+              selectedTemplate === "banner-focused" ||
+              selectedTemplate === "without-icon-bg" ||
+              selectedTemplate === "with-icon-bg" ||
+              selectedTemplate === "solid-icon"
+                ? ""
+                : selectedTemplate === "professional" || selectedTemplate === "split"
+                ? "col-md-8"
+                : "col-md-8 my-auto"
+            }
+            style={{
+              width:
+                selectedTemplate === "modern" ||
+                selectedTemplate ==="stacked" ||
+                selectedTemplate === "banner-focused" ||
+                selectedTemplate === "without-icon-bg" ||
+                selectedTemplate === "with-icon-bg" ||
+                selectedTemplate === "solid-icon"
+                  ? "100%"
+                  : "auto",
+            }}
+          >
+            <h3
+              className="mb-2"
+              style={{
+                ...nameStyle,
+                textAlign:
+                  selectedTemplate === "modern" ||
+                  selectedTemplate === "professional" ||
+                  selectedTemplate === "stacked" ||
+                  selectedTemplate === "banner-focused" ||
+                  selectedTemplate === "without-icon-bg" ||
+                  selectedTemplate === "with-icon-bg" ||
+                  selectedTemplate === "solid-icon"
+                    ? "center"
+                    : "left",
+              }}
+            >
               {formData.name}
             </h3>
-            <h5 className="mb-2" style={{ textAlign: selectedTemplate === "modern" ? "center" : "left" }}>
+            <h5
+              className="mb-2"
+              style={{
+                textAlign:
+                  selectedTemplate === "modern" ||
+                  selectedTemplate === "professional" ||
+                  selectedTemplate === "stacked" ||
+                  selectedTemplate === "banner-focused" ||
+                  selectedTemplate === "without-icon-bg" ||
+                  selectedTemplate === "with-icon-bg" ||
+                  selectedTemplate === "solid-icon"
+                    ? "center"
+                    : "left",
+              }}
+            >
               {formData.designation}
             </h5>
             <div
-              className={selectedTemplate === "modern" ? "d-flex flex-column align-items-center gap-1" : "d-flex gap-2"}
+              className={
+                selectedTemplate === "modern" ||
+                selectedTemplate === "professional" ||
+                selectedTemplate === "stacked" ||
+                selectedTemplate === "banner-focused" ||
+                selectedTemplate === "without-icon-bg" ||
+                selectedTemplate === "with-icon-bg" ||
+                selectedTemplate === "solid-icon"
+                  ? "d-flex flex-column align-items-center gap-1"
+                  : "d-flex gap-2"
+              }
             >
               <h6>
                 {formData.company !== "" ? `${formData.company}, ` : formData.company}
@@ -370,25 +500,96 @@ const MailSignature = () => {
               </h6>
             </div>
             <div
-              className={selectedTemplate === "modern" ? "d-flex flex-column align-items-center gap-1" : "grid"}
+              className={
+                selectedTemplate === "modern" ||
+                selectedTemplate === "professional" ||
+                selectedTemplate === "stacked" ||
+                selectedTemplate === "banner-focused" ||
+                selectedTemplate === "without-icon-bg" ||
+                selectedTemplate === "with-icon-bg" ||
+                selectedTemplate === "solid-icon"
+                  ? "d-flex flex-column align-items-center gap-1"
+                  : "grid"
+              }
             >
               {extraFields.map((field, index) => (
-                <div key={index} className={selectedTemplate === "modern" ? "d-flex align-items-center gap-2" : "grid-item"}>
-                  {designOptions.includeDivider && index !== 0 && <span className="divider">|</span>}
+                <div
+                  key={index}
+                  className={
+                    selectedTemplate === "modern" ||
+                    selectedTemplate === "professional" ||
+                    selectedTemplate === "stacked" ||
+                    selectedTemplate === "banner-focused" ||
+                    selectedTemplate === "without-icon-bg" ||
+                    selectedTemplate === "with-icon-bg" ||
+                    selectedTemplate === "solid-icon"
+                      ? "d-flex align-items-center gap-2"
+                      : "grid-item"
+                  }
+                >
+                  {designOptions.includeDivider && index !== 0 && (
+                    <span className="divider">|</span>
+                  )}
                   <span>{formData[field] || field}</span>
                 </div>
               ))}
             </div>
-            <div
-              className={`social-icons d-flex ${selectedTemplate === "modern" ? "justify-content-center" : "gap-2"} mt-2`}
-            >
-              {selectedIcons.map((icon, idx) => (
-                <a key={idx} href={icon.inputValue} target="_blank" rel="noopener noreferrer">
-                  <div style={{ backgroundColor: icon.color }} className="social-icon">
-                    {icon.icon}
-                  </div>
-                </a>
-              ))}
+            <div className={socialIconsClass}>
+              {selectedIcons.map((icon, idx) => {
+                let socialIconStyle = {};
+                let iconStyle = {};
+
+                if (selectedTemplate === "without-icon-bg") {
+                  socialIconStyle = {
+                    border: "none",
+                    backgroundColor: "transparent",
+                    transition: "none",
+                  };
+                  iconStyle = {
+                    color: "#6D28D9", // Purple
+                  };
+                } else if (selectedTemplate === "with-icon-bg") {
+                  socialIconStyle = {
+                    backgroundColor: "#6D28D9", // Purple background
+                    border: "1px solid white",
+                    transition: "none",
+                  };
+                  iconStyle = {
+                    color: "white",
+                    backgroundColor: "transparent",
+                  };
+                } else if (selectedTemplate === "solid-icon") {
+                  socialIconStyle = {
+                    backgroundColor: "#6D28D9", // Purple background
+                    border: "none",
+                    transition: "none",
+                  };
+                  iconStyle = {
+                    color: "white",
+                    backgroundColor: "transparent",
+                  };
+                } else {
+                  socialIconStyle = {
+                    backgroundColor: icon.color,
+                    border: `1px solid ${icon.color}`,
+                    transition: "none",
+                  };
+                  iconStyle = {};
+                }
+
+                return (
+                  <a
+                    key={idx}
+                    href={icon.inputValue}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div style={socialIconStyle} className="social-icon">
+                      {React.cloneElement(icon.icon, { style: iconStyle })}
+                    </div>
+                  </a>
+                );
+              })}
             </div>
             {apps.bannerUrl && (
               <img
@@ -396,8 +597,24 @@ const MailSignature = () => {
                 alt="Banner"
                 className="mt-2"
                 style={{
-                  maxWidth: selectedTemplate === "modern" ? "100%" : "100%",
-                  margin: selectedTemplate === "modern" ? "0 auto" : "0",
+                  maxWidth:
+                    selectedTemplate === "modern" ||
+                    selectedTemplate === "stacked" ||
+                    selectedTemplate === "banner-focused" ||
+                    selectedTemplate === "without-icon-bg" ||
+                    selectedTemplate === "with-icon-bg" ||
+                    selectedTemplate === "solid-icon"
+                      ? "100%"
+                      : "50%",
+                  margin:
+                    selectedTemplate === "modern" ||
+                    selectedTemplate === "stacked" ||
+                    selectedTemplate === "banner-focused" ||
+                    selectedTemplate === "without-icon-bg" ||
+                    selectedTemplate === "with-icon-bg" ||
+                    selectedTemplate === "solid-icon"
+                      ? "0 auto"
+                      : "0",
                 }}
               />
             )}
@@ -407,16 +624,57 @@ const MailSignature = () => {
                 title="Video"
                 className="mt-2"
                 style={{
-                  width: selectedTemplate === "modern" ? "100%" : "100%",
-                  maxWidth: selectedTemplate === "modern" ? "400px" : "100%",
+                  width:
+                    selectedTemplate === "modern" ||
+                    selectedTemplate === "stacked" ||
+                    selectedTemplate === "banner-focused" ||
+                    selectedTemplate === "without-icon-bg" ||
+                    selectedTemplate === "with-icon-bg" ||
+                    selectedTemplate === "solid-icon"
+                      ? "100%"
+                      : "100%",
+                  maxWidth:
+                    selectedTemplate === "modern" ||
+                    selectedTemplate === "stacked" ||
+                    selectedTemplate === "banner-focused" ||
+                    selectedTemplate === "without-icon-bg" ||
+                    selectedTemplate === "with-icon-bg" ||
+                    selectedTemplate === "solid-icon"
+                      ? "400px"
+                      : "100%",
                   height: "200px",
-                  margin: selectedTemplate === "modern" ? "0 auto" : "0",
+                  margin:
+                    selectedTemplate === "modern" ||
+                    selectedTemplate === "stacked" ||
+                    selectedTemplate === "banner-focused" ||
+                    selectedTemplate === "without-icon-bg" ||
+                    selectedTemplate === "with-icon-bg" ||
+                    selectedTemplate === "solid-icon"
+                      ? "0 auto"
+                      : "0",
                 }}
               />
             )}
             {apps.customButton.text && (
-              <div style={{ textAlign: selectedTemplate === "modern" ? "center" : "left" }}>
-                <a href={apps.customButton.url} target="_blank" rel="noopener noreferrer">
+              <div
+                style={{
+                  textAlign:
+                    selectedTemplate === "modern" ||
+                    selectedTemplate === "professional" ||
+                    selectedTemplate === "stacked" ||
+                    selectedTemplate === "banner-focused" ||
+                    selectedTemplate === "without-icon-bg" ||
+                    selectedTemplate === "with-icon-bg" ||
+                    selectedTemplate === "solid-icon"
+                      ? "center"
+                      : "left",
+                }}
+              >
+                <a
+                  href={apps.customButton.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button colorScheme="blue" className="mt-2">
                     {apps.customButton.text}
                   </Button>
@@ -428,7 +686,18 @@ const MailSignature = () => {
                 fontSize="sm"
                 color="gray"
                 className="mt-2"
-                style={{ textAlign: selectedTemplate === "modern" ? "center" : "left" }}
+                style={{
+                  textAlign:
+                    selectedTemplate === "modern" ||
+                    selectedTemplate === "professional" ||
+                    selectedTemplate === "stacked" ||
+                    selectedTemplate === "banner-focused" ||
+                    selectedTemplate === "without-icon-bg" ||
+                    selectedTemplate === "with-icon-bg" ||
+                    selectedTemplate === "solid-icon"
+                      ? "center"
+                      : "left",
+                }}
               >
                 {apps.disclaimer}
               </Text>
@@ -445,18 +714,20 @@ const MailSignature = () => {
         <div className="menu-bar">
           <div className="menu">
             <ul className="menu-links">
-              {["Detail", "Images", "Social", "Template", "Design", "Apps"].map((tab) => (
-                <li
-                  key={tab}
-                  className={`nav-link ${selectedTab === tab ? "active" : ""}`}
-                  onClick={() => setSelectedTab(tab)}
-                >
-                  <a>
-                    <span className="icon">{tabIcons[tab]}</span>
-                    <span className="text nav-text">{tab}</span>
-                  </a>
-                </li>
-              ))}
+              {["Detail", "Images", "Social", "Template", "Design", "Apps"].map(
+                (tab) => (
+                  <li
+                    key={tab}
+                    className={`nav-link ${selectedTab === tab ? "active" : ""}`}
+                    onClick={() => setSelectedTab(tab)}
+                  >
+                    <a>
+                      <span className="icon">{tabIcons[tab]}</span>
+                      <span className="text nav-text">{tab}</span>
+                    </a>
+                  </li>
+                )
+              )}
             </ul>
           </div>
         </div>
@@ -476,7 +747,9 @@ const MailSignature = () => {
                     variant="outlined"
                     className={styles.textField}
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                   />
                   <div className="iconContainer pe-4"></div>
                 </div>
@@ -489,7 +762,9 @@ const MailSignature = () => {
                     variant="outlined"
                     className={styles.textField}
                     value={formData.designation}
-                    onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, designation: e.target.value })
+                    }
                   />
                   <div className="iconContainer pe-4"></div>
                 </div>
@@ -501,7 +776,9 @@ const MailSignature = () => {
                     label="Company Name"
                     value={formData.company}
                     variant="outlined"
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, company: e.target.value })
+                    }
                     className={styles.textField}
                   />
                   <div className="iconContainer pe-4"></div>
@@ -513,7 +790,9 @@ const MailSignature = () => {
                       labelId="select-label"
                       id="select"
                       value={formData.selected}
-                      onChange={(e) => setFormData({ ...formData, selected: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, selected: e.target.value })
+                      }
                       label="Select an Option"
                       className={styles.select}
                     >
@@ -535,17 +814,26 @@ const MailSignature = () => {
                       label={field}
                       variant="outlined"
                       value={formData[field] || ""}
-                      onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, [field]: e.target.value })
+                      }
                       className={styles.textField}
                     />
                     <div>
-                      <Delete className="icon" onClick={() => handleRemoveField(index)} />
+                      <Delete
+                        className="icon"
+                        onClick={() => handleRemoveField(index)}
+                      />
                     </div>
                   </div>
                 ))}
                 <div className={styles.inputContainer}>
-                  <p className={styles.addMoreP} onClick={() => setShowOptions(!showOptions)}>
-                    Add More Field <RiAddBoxFill size={30} className={styles.addMoreIcon} />
+                  <p
+                    className={styles.addMoreP}
+                    onClick={() => setShowOptions(!showOptions)}
+                  >
+                    Add More Field{" "}
+                    <RiAddBoxFill size={30} className={styles.addMoreIcon} />
                   </p>
                   {showOptions && (
                     <div className={styles.dropdownContainer}>
@@ -631,7 +919,12 @@ const MailSignature = () => {
                   />
                 </div>
                 {modalIsOpen && (
-                  <Modal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} size="full" isCentered>
+                  <Modal
+                    isOpen={modalIsOpen}
+                    onClose={() => setModalIsOpen(false)}
+                    size="full"
+                    isCentered
+                  >
                     <ModalOverlay />
                     <ModalContent>
                       <ModalCloseButton />
@@ -655,7 +948,10 @@ const MailSignature = () => {
                         <Button colorScheme="blue" onClick={handleCropSave}>
                           Save
                         </Button>
-                        <Button variant="outline" onClick={() => setModalIsOpen(false)}>
+                        <Button
+                          variant="outline"
+                          onClick={() => setModalIsOpen(false)}
+                        >
                           Cancel
                         </Button>
                       </ModalFooter>
@@ -716,14 +1012,20 @@ const MailSignature = () => {
                           className={styles.textField}
                         />
                         <div>
-                          <Delete className="icon" onClick={() => handleIconRemove(index)} />
+                          <Delete
+                            className="icon"
+                            onClick={() => handleIconRemove(index)}
+                          />
                         </div>
                       </div>
                     ))}
                   </>
                 )}
               </div>
-              <div className="allSocialMediaIcon mt-5 px-3" style={{ display: "flex", flexWrap: "wrap" }}>
+              <div
+                className="allSocialMediaIcon mt-5 px-3"
+                style={{ display: "flex", flexWrap: "wrap" }}
+              >
                 {socialMediaIcons.map((iconData, index) => (
                   <Tooltip
                     label={iconData.name}
@@ -758,7 +1060,11 @@ const MailSignature = () => {
                     key={template.id}
                     onClick={() => setSelectedTemplate(template.id)}
                     cursor="pointer"
-                    border={selectedTemplate === template.id ? "2px solid blue" : "1px solid gray"}
+                    border={
+                      selectedTemplate === template.id
+                        ? "2px solid blue"
+                        : "1px solid gray"
+                    }
                   >
                     <Card>
                       <p variant="h6">{template.name}</p>
@@ -779,7 +1085,9 @@ const MailSignature = () => {
                     labelId="font-family-label"
                     id="font-family"
                     value={designOptions.fontFamily}
-                    onChange={(e) => handleDesignChange("fontFamily", e.target.value)}
+                    onChange={(e) =>
+                      handleDesignChange("fontFamily", e.target.value)
+                    }
                     label="Font Family"
                     className={styles.select}
                   >
@@ -809,7 +1117,9 @@ const MailSignature = () => {
                   label="Primary Color"
                   type="color"
                   value={designOptions.primaryColor}
-                  onChange={(e) => handleDesignChange("primaryColor", e.target.value)}
+                  onChange={(e) =>
+                    handleDesignChange("primaryColor", e.target.value)
+                  }
                 />
               </div>
               <div className={styles.inputContainer}>
@@ -817,7 +1127,9 @@ const MailSignature = () => {
                   control={
                     <Switch
                       checked={designOptions.boldName}
-                      onChange={(e) => handleDesignChange("boldName", e.target.checked)}
+                      onChange={(e) =>
+                        handleDesignChange("boldName", e.target.checked)
+                      }
                     />
                   }
                   label="Bold Name"
@@ -826,7 +1138,9 @@ const MailSignature = () => {
                   control={
                     <Switch
                       checked={designOptions.includeDivider}
-                      onChange={(e) => handleDesignChange("includeDivider", e.target.checked)}
+                      onChange={(e) =>
+                        handleDesignChange("includeDivider", e.target.checked)
+                      }
                     />
                   }
                   label="Include Dividers"
@@ -849,7 +1163,13 @@ const MailSignature = () => {
               <Box sx={{ m: 1 }}>
                 <FormLabel>Banner Image</FormLabel>
                 <Input type="file" accept="image/*" onChange={handleBannerChange} />
-                {apps.bannerUrl && <img src={apps.bannerUrl} alt="Banner Preview" className="mt-2 w-50" />}
+                {apps.bannerUrl && (
+                  <img
+                    src={apps.bannerUrl}
+                    alt="Banner Preview"
+                    className="mt-2 w-50"
+                  />
+                )}
               </Box>
               <TextField
                 fullWidth
@@ -864,7 +1184,9 @@ const MailSignature = () => {
                 sx={{ m: 1 }}
                 label="Button Text"
                 value={apps.customButton.text}
-                onChange={(e) => handleCustomButtonChange("text", e.target.value)}
+                onChange={(e) =>
+                  handleCustomButtonChange("text", e.target.value)
+                }
               />
               <TextField
                 fullWidth
@@ -911,7 +1233,11 @@ const MailSignature = () => {
             <Button size="sm" onClick={onClose} className="cancel">
               Cancel
             </Button>
-            <Button colorScheme="blue" onClick={handleCustomFieldSubmit} className="okay">
+            <Button
+              colorScheme="blue"
+              onClick={handleCustomFieldSubmit}
+              className="okay"
+            >
               Add
             </Button>
           </ModalFooter>
