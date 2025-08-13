@@ -355,7 +355,7 @@ const MailSignature = () => {
         layoutClass = "d-flex gap-3 align-items-start";
     }
 
-    let socialIconsClass = `social-icons d-flex ${
+    let socialIconsClass = `social-icons gap-2 d-flex ${
       selectedTemplate === "modern" ||
       selectedTemplate === "professional" ||
       selectedTemplate === "stacked" ||
