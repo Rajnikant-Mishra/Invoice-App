@@ -524,19 +524,14 @@ h1 {
 .card {
   display: flex;
   flex-direction: column;
-  text-align: start;
-  
+  text-align: start;  
   border: 1px solid rgb(192, 190, 190);
   margin: auto;
   margin-top: 10%;
-  /* height: 300px; */
-
   overflow: auto;
   padding: 1% 2%;
-
   padding-bottom: 8px;
   box-sizing: border-box;
-  max-height: max-content;
 }
 .carddiv{
   width: 60%;
@@ -704,4 +699,10 @@ section#chakra-modal-\:rn\: {
 }
 footer.chakra-modal__footer.css-192qrng {
   justify-content: space-between;
+}
+.social-icons {
+  display: flex;
+  flex-wrap: wrap; /* Ensures icons wrap to the next line when they overflow */
+  gap: 10px; /* Maintains spacing between icons */
+  margin-top: 8px; /* Adjusted margin for better spacing */
 }

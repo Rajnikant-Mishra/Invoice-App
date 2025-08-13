@@ -355,7 +355,7 @@ const MailSignature = () => {
         layoutClass = "d-flex gap-3 align-items-start";
     }
 
-    let socialIconsClass = `social-icons gap-2 d-flex ${
+    let socialIconsClass = `social-icons d-flex flex-wrap gap-2 ${
       selectedTemplate === "modern" ||
       selectedTemplate === "professional" ||
       selectedTemplate === "stacked" ||
@@ -364,7 +364,7 @@ const MailSignature = () => {
       selectedTemplate === "with-icon-bg" ||
       selectedTemplate === "solid-icon"
         ? "justify-content-center"
-        : "gap-2"
+        : ""
     } mt-2`;
 
     return (
@@ -435,7 +435,7 @@ const MailSignature = () => {
             style={{
               width:
                 selectedTemplate === "modern" ||
-                selectedTemplate ==="stacked" ||
+                selectedTemplate === "stacked" ||
                 selectedTemplate === "banner-focused" ||
                 selectedTemplate === "without-icon-bg" ||
                 selectedTemplate === "with-icon-bg" ||
@@ -500,7 +500,7 @@ const MailSignature = () => {
               </h6>
             </div>
             <div
-              className={
+              className={`extra-fields d-flex flex-wrap gap-2 ${
                 selectedTemplate === "modern" ||
                 selectedTemplate === "professional" ||
                 selectedTemplate === "stacked" ||
@@ -508,24 +508,14 @@ const MailSignature = () => {
                 selectedTemplate === "without-icon-bg" ||
                 selectedTemplate === "with-icon-bg" ||
                 selectedTemplate === "solid-icon"
-                  ? "d-flex flex-column align-items-center gap-1"
-                  : "grid"
-              }
+                  ? "justify-content-center"
+                  : ""
+              }`}
             >
               {extraFields.map((field, index) => (
                 <div
                   key={index}
-                  className={
-                    selectedTemplate === "modern" ||
-                    selectedTemplate === "professional" ||
-                    selectedTemplate === "stacked" ||
-                    selectedTemplate === "banner-focused" ||
-                    selectedTemplate === "without-icon-bg" ||
-                    selectedTemplate === "with-icon-bg" ||
-                    selectedTemplate === "solid-icon"
-                      ? "d-flex align-items-center gap-2"
-                      : "grid-item"
-                  }
+                  className="extra-field-item d-flex align-items-center gap-2"
                 >
                   {designOptions.includeDivider && index !== 0 && (
                     <span className="divider">|</span>
@@ -543,16 +533,14 @@ const MailSignature = () => {
                   socialIconStyle = {
                     border: "none",
                     backgroundColor: "transparent",
-                    transition: "none",
                   };
                   iconStyle = {
-                    color: "#6D28D9", // Purple
+                    color: "#6D28D9",
                   };
                 } else if (selectedTemplate === "with-icon-bg") {
                   socialIconStyle = {
-                    backgroundColor: "#6D28D9", // Purple background
+                    backgroundColor: "#6D28D9",
                     border: "1px solid white",
-                    transition: "none",
                   };
                   iconStyle = {
                     color: "white",
@@ -560,9 +548,8 @@ const MailSignature = () => {
                   };
                 } else if (selectedTemplate === "solid-icon") {
                   socialIconStyle = {
-                    backgroundColor: "#6D28D9", // Purple background
+                    backgroundColor: "#6D28D9",
                     border: "none",
-                    transition: "none",
                   };
                   iconStyle = {
                     color: "white",
@@ -572,7 +559,6 @@ const MailSignature = () => {
                   socialIconStyle = {
                     backgroundColor: icon.color,
                     border: `1px solid ${icon.color}`,
-                    transition: "none",
                   };
                   iconStyle = {};
                 }
@@ -583,6 +569,7 @@ const MailSignature = () => {
                     href={icon.inputValue}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="d-flex align-items-center gap-2"
                   >
                     <div style={socialIconStyle} className="social-icon">
                       {React.cloneElement(icon.icon, { style: iconStyle })}
