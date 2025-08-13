@@ -2,15 +2,13 @@ import React, { useState, useRef, useCallback } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./MailSignature.css";
 import styles from "./Detail.module.css";
-import { BiSolidUserDetail, BiLogoMediumOld } from "react-icons/bi";
+import { BiSolidUserDetail } from "react-icons/bi";
 import { BsTrash } from "react-icons/bs";
-
 import { IoShareSocialOutline, IoLogoGooglePlaystore } from "react-icons/io5";
 import { GrTemplate } from "react-icons/gr";
-import { CiImageOn, CiYoutube, CiSquarePlus } from "react-icons/ci";
+import { CiYoutube } from "react-icons/ci";
 import { MdOutlineDraw, MdOutlineDashboardCustomize } from "react-icons/md";
 import Cropper from "react-easy-crop";
-
 import {
   TextField,
   Select,
@@ -22,7 +20,7 @@ import {
   Switch,
 } from "@mui/material";
 import { RiAddBoxFill } from "react-icons/ri";
-import { Delete, WhatsApp } from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
 import { RxCross2 } from "react-icons/rx";
 import {
   FaRegImage,
@@ -66,54 +64,42 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  ButtonGroup,
   useDisclosure,
   Input,
   FormLabel,
-  useToast,
   Text,
   Tooltip,
   Box,
   Grid,
   Card,
-  
- 
-
-  Checkbox,
 } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { LiaImdb } from "react-icons/lia";
 
 const MailSignature = () => {
   const [formData, setFormData] = useState({
-    logoFile: null,
     name: "Sarita Gochhayat",
     designation: "Web Developer",
     company: "Evoquesys",
-    selected: "Directer",
+    selected: "Director",
   });
   const [showOptions, setShowOptions] = useState(false);
   const [selectedTab, setSelectedTab] = useState("Detail");
   const [extraFields, setExtraFields] = useState([]);
   const [customFieldLabel, setCustomFieldLabel] = useState("");
-
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedArea, setCroppedArea] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
   const [imageShape, setImageShape] = useState("circle");
-
-  const [signatureFile, setSignatureFile] = useState(null);
-  const [signaturePreviewUrl, setSignaturePreviewUrl] = useState("https://w7.pngwing.com/pngs/945/606/png-transparent-baby-boss-illustration-infant-youtube-animation-sticker-youtube-family-glasses-film.png");
+  const [signaturePreviewUrl, setSignaturePreviewUrl] = useState(
+    "https://w7.pngwing.com/pngs/945/606/png-transparent-baby-boss-illustration-infant-youtube-animation-sticker-youtube-family-glasses-film.png"
+  );
   const [fileInputVisible, setFileInputVisible] = useState(true);
   const signatureFileInputRef = useRef(null);
   const [selectedIcons, setSelectedIcons] = useState([]);
-  const [showIcons, setShowIcons] = useState([]);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [availableFields, setAvailableFields] = useState([
     "Phone",
     "Address",
@@ -125,186 +111,42 @@ const MailSignature = () => {
   ]);
 
   const socialMediaIcons = [
-    {
-      icon: <FaFacebookF />,
-      color: "#1877F2",
-      name: "Facebook",
-    },
-    {
-      icon: <FaLinkedinIn />,
-      color: "#0077B5",
-      name: "LinkedIn",
-    },
-    {
-      icon: <FaXTwitter />,
-      color: "#1DA1F2",
-      name: "Twitter",
-    },
-    {
-      icon: <FaMeetup />,
-      color: "#F96060",
-      name: "Meetup",
-    },
-    {
-      icon: <FaYelp />,
-      color: "#D32323",
-      name: "Yelp",
-    },
-    {
-      icon: <FaMapMarkerAlt />,
-      color: "#FF5A5F",
-      name: "Map",
-    },
-    {
-      icon: <IoLogoGooglePlaystore />,
-      color: "#3DDC84",
-      name: "Google Play",
-    },
-    {
-      icon: <FaStackOverflow />,
-      color: "#FE7A16",
-      name: "Stack Overflow",
-    },
-    {
-      icon: <FaBehance />,
-      color: "#1769FF",
-      name: "Behance",
-    },
-    {
-      icon: <AiFillInstagram />,
-      color: "#C13584",
-      name: "Instagram",
-    },
-    {
-      icon: <FaUpwork />,
-      color: "#6FDA44",
-      name: "Upwork",
-    },
-    {
-      icon: <FaEbay />,
-      color: "#0064A4",
-      name: "eBay",
-    },
-    {
-      icon: <FaThreads />,
-      color: "#6D28D9",
-      name: "Threads",
-    },
-    {
-      icon: <FaEtsy />,
-      color: "#D5642F",
-      name: "Etsy",
-    },
-    {
-      icon: <FaPinterestP />,
-      color: "#E60023",
-      name: "Pinterest",
-    },
-    {
-      icon: <CiYoutube />,
-      color: "#FF0000",
-      name: "YouTube",
-    },
-    {
-      icon: <FaApple />,
-      color: "#000000",
-      name: "Apple",
-    },
-    {
-      icon: <FaBloggerB />,
-      color: "#FF5722",
-      name: "Blogger",
-    },
-    {
-      icon: <FaSoundcloud />,
-      color: "#FF7700",
-      name: "SoundCloud",
-    },
-    {
-      icon: <FaFlickr />,
-      color: "#FF0084",
-      name: "Flickr",
-    },
-    {
-      icon: <FaDeviantart />,
-      color: "#05CC47",
-      name: "DeviantArt",
-    },
-    {
-      icon: <FaReddit />,
-      color: "#FF4500",
-      name: "Reddit",
-    },
-    {
-      icon: <FaWhatsapp />,
-      color: "#25D366",
-      name: "WhatsApp",
-    },
-    {
-      icon: <FaAmazon />,
-      color: "#FF9900",
-      name: "Amazon Prime",
-    },
-    {
-      icon: <FaSlack />,
-      color: "#4A154B",
-      name: "Slack",
-    },
-    {
-      icon: <FaTelegram />,
-      color: "#0088CC",
-      name: "Telegram",
-    },
-    {
-      icon: <FaPatreon />,
-      color: "#FF424D",
-      name: "Patreon",
-    },
-    {
-      icon: <FaTumblr />,
-      color: "#35465C",
-      name: "Tumblr",
-    },
-    {
-      icon: <FaWordpress />,
-      color: "#21759B",
-      name: "WordPress",
-    },
-    {
-      icon: <FaRss />,
-      color: "#FF6600",
-      name: "RSS",
-    },
-    {
-      icon: <SiZillow />,
-      color: "#0072CE",
-      name: "Zillow",
-    },
-    {
-      icon: <LiaImdb />,
-      color: "#F5C518",
-      name: "IMDb",
-    },
-    {
-      icon: <FaSnapchatGhost />,
-      color: "#FFFC00",
-      name: "Snapchat",
-    },
-    {
-      icon: <TbBrandGithubFilled />,
-      color: "#181717",
-      name: "GitHub",
-    },
-    {
-      icon: <FaVimeoV />,
-      color: "#1AB7EA",
-      name: "Vimeo",
-    },
-    {
-      icon: <SiNetlify />,
-      color: "#00C7B7",
-      name: "Netlify",
-    },
+    { icon: <FaFacebookF />, color: "#1877F2", name: "Facebook" },
+    { icon: <FaLinkedinIn />, color: "#0077B5", name: "LinkedIn" },
+    { icon: <FaXTwitter />, color: "#1DA1F2", name: "Twitter" },
+    { icon: <FaMeetup />, color: "#F96060", name: "Meetup" },
+    { icon: <FaYelp />, color: "#D32323", name: "Yelp" },
+    { icon: <FaMapMarkerAlt />, color: "#FF5A5F", name: "Map" },
+    { icon: <IoLogoGooglePlaystore />, color: "#3DDC84", name: "Google Play" },
+    { icon: <FaStackOverflow />, color: "#FE7A16", name: "Stack Overflow" },
+    { icon: <FaBehance />, color: "#1769FF", name: "Behance" },
+    { icon: <AiFillInstagram />, color: "#C13584", name: "Instagram" },
+    { icon: <FaUpwork />, color: "#6FDA44", name: "Upwork" },
+    { icon: <FaEbay />, color: "#0064A4", name: "eBay" },
+    { icon: <FaThreads />, color: "#6D28D9", name: "Threads" },
+    { icon: <FaEtsy />, color: "#D5642F", name: "Etsy" },
+    { icon: <FaPinterestP />, color: "#E60023", name: "Pinterest" },
+    { icon: <CiYoutube />, color: "#FF0000", name: "YouTube" },
+    { icon: <FaApple />, color: "#000000", name: "Apple" },
+    { icon: <FaBloggerB />, color: "#FF5722", name: "Blogger" },
+    { icon: <FaSoundcloud />, color: "#FF7700", name: "SoundCloud" },
+    { icon: <FaFlickr />, color: "#FF0084", name: "Flickr" },
+    { icon: <FaDeviantart />, color: "#05CC47", name: "DeviantArt" },
+    { icon: <FaReddit />, color: "#FF4500", name: "Reddit" },
+    { icon: <FaWhatsapp />, color: "#25D366", name: "WhatsApp" },
+    { icon: <FaAmazon />, color: "#FF9900", name: "Amazon Prime" },
+    { icon: <FaSlack />, color: "#4A154B", name: "Slack" },
+    { icon: <FaTelegram />, color: "#0088CC", name: "Telegram" },
+    { icon: <FaPatreon />, color: "#FF424D", name: "Patreon" },
+    { icon: <FaTumblr />, color: "#35465C", name: "Tumblr" },
+    { icon: <FaWordpress />, color: "#21759B", name: "WordPress" },
+    { icon: <FaRss />, color: "#FF6600", name: "RSS" },
+    { icon: <SiZillow />, color: "#0072CE", name: "Zillow" },
+    { icon: <LiaImdb />, color: "#F5C518", name: "IMDb" },
+    { icon: <FaSnapchatGhost />, color: "#FFFC00", name: "Snapchat" },
+    { icon: <TbBrandGithubFilled />, color: "#181717", name: "GitHub" },
+    { icon: <FaVimeoV />, color: "#1AB7EA", name: "Vimeo" },
+    { icon: <SiNetlify />, color: "#00C7B7", name: "Netlify" },
   ];
 
   const tabIcons = {
@@ -316,7 +158,6 @@ const MailSignature = () => {
     Apps: <MdOutlineDraw size={20} />,
   };
 
-  // New states for Template, Design, Apps
   const [selectedTemplate, setSelectedTemplate] = useState("default");
   const [designOptions, setDesignOptions] = useState({
     primaryColor: "#000",
@@ -337,7 +178,6 @@ const MailSignature = () => {
     { id: "modern", name: "Modern", layout: "vertical" },
     { id: "minimal", name: "Minimal", layout: "compact" },
     { id: "video", name: "Video", layout: "horizontal-with-video" },
-    // Add more mock templates as needed
   ];
 
   const handleAddField = (field) => {
@@ -392,6 +232,7 @@ const MailSignature = () => {
       setFileInputVisible(false);
     }
   };
+
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedArea(croppedAreaPixels);
   }, []);
@@ -403,20 +244,22 @@ const MailSignature = () => {
       setModalIsOpen(false);
     }
   };
+
   const handleSignatureClick = () => {
     if (signatureFileInputRef.current) {
       signatureFileInputRef.current.value = null;
       signatureFileInputRef.current.click();
     }
   };
+
   const handleDeleteSignature = () => {
     if (signaturePreviewUrl) {
       URL.revokeObjectURL(signaturePreviewUrl);
     }
-    setSignatureFile(null);
     setSignaturePreviewUrl(null);
     setFileInputVisible(true);
   };
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -427,23 +270,23 @@ const MailSignature = () => {
   const handleIconClick = (iconData) => {
     setSelectedIcons((prev) => [...prev, { ...iconData, inputValue: "" }]);
   };
+
   const handleInputChange = (index, e) => {
     const updatedIcons = selectedIcons.map((item, idx) =>
       idx === index ? { ...item, inputValue: e.target.value } : item
     );
     setSelectedIcons(updatedIcons);
   };
-  const handleIconRemove = (index, e) => {
+
+  const handleIconRemove = (index) => {
     const deleteIcon = selectedIcons.filter((_, ind) => ind !== index);
     setSelectedIcons(deleteIcon);
   };
 
-  // Handlers for Design
   const handleDesignChange = (key, value) => {
     setDesignOptions((prev) => ({ ...prev, [key]: value }));
   };
 
-  // Handlers for Apps
   const handleAppChange = (key, value) => {
     setApps((prev) => ({ ...prev, [key]: value }));
   };
@@ -466,12 +309,12 @@ const MailSignature = () => {
     }
   };
 
-  // Render Preview based on template
   const renderPreview = () => {
     const style = {
       fontFamily: designOptions.fontFamily,
       fontSize: `${designOptions.fontSize}px`,
       color: designOptions.primaryColor,
+      textAlign: selectedTemplate === "modern" ? "center" : "left",
     };
 
     const nameStyle = designOptions.boldName ? { fontWeight: "bold" } : {};
@@ -479,59 +322,66 @@ const MailSignature = () => {
     let layoutClass = "";
     switch (selectedTemplate) {
       case "modern":
-        layoutClass = "d-flex flex-column align-items-center text-center";
+        layoutClass = "d-flex flex-column align-items-center text-center gap-2";
         break;
       case "minimal":
-        layoutClass = "d-flex justify-content-between";
+        layoutClass = "d-flex justify-content-between gap-2";
         break;
       case "video":
-        layoutClass = "d-flex flex-column";
+        layoutClass = "d-flex gap-3 flex-row ";
         break;
       default:
-        layoutClass = "d-flex gap-3";
+        layoutClass = "d-flex gap-3 align-items-start";
     }
 
     return (
       <div className={`card carddiv`} style={style}>
-        <div className={`card-content ${layoutClass} gap-2`}>
+        <div className={`card-content ${layoutClass} `} style={{ width: "100%" }}>
           {signaturePreviewUrl && (
-            <div className="col-3">
+            <div className={selectedTemplate === "modern" ? "mb-3" : "col-md-3"} style={{ textAlign: selectedTemplate === "modern" ? "center" : "left" }}>
               <img
                 src={signaturePreviewUrl}
                 alt="Signature Preview"
                 className="img-fluid"
                 style={{
                   borderRadius: imageShape === "circle" ? "50%" : "0",
-                  height: "200px",
-                  width: "200px",
+                  height: "150px",
+                  width: "150px",
+                  margin: selectedTemplate === "modern" ? "0 auto" : "0",
                 }}
               />
             </div>
           )}
-          <div className="col-8">
-            <h3 className="mb-2" style={nameStyle}>
+          <div className={`${selectedTemplate === "modern" ? "" : "col-md-8"} my-auto`} style={{ width: selectedTemplate === "modern" ? "100%" : "auto" }}>
+            <h3 className="mb-2" style={{ ...nameStyle, textAlign: selectedTemplate === "modern" ? "center" : "left" }}>
               {formData.name}
             </h3>
-            <h5 className="mb-2">{formData.designation}</h5>
-            <div className="d-flex gap-2">
+            <h5 className="mb-2" style={{ textAlign: selectedTemplate === "modern" ? "center" : "left" }}>
+              {formData.designation}
+            </h5>
+            <div
+              className={selectedTemplate === "modern" ? "d-flex flex-column align-items-center gap-1" : "d-flex gap-2"}
+            >
               <h6>
-                {formData.company !== ""
-                  ? `${formData.company}, `
-                  : `${formData.company}`}
+                {formData.company !== "" ? `${formData.company}, ` : formData.company}
+                {formData.selected && (
+                  <span className="writenBy">{formData.selected}</span>
+                )}
               </h6>
-              <h6 className="writenBy"> {formData.selected}</h6>
             </div>
-            <div className="grid">
+            <div
+              className={selectedTemplate === "modern" ? "d-flex flex-column align-items-center gap-1" : "grid"}
+            >
               {extraFields.map((field, index) => (
-                <React.Fragment key={index}>
-                  <div className="grid-item">
-                    {designOptions.includeDivider && index !== 0 && <span className="divider">|</span>}{" "}
-                    <span>{formData[field]}</span>
-                  </div>
-                </React.Fragment>
+                <div key={index} className={selectedTemplate === "modern" ? "d-flex align-items-center gap-2" : "grid-item"}>
+                  {designOptions.includeDivider && index !== 0 && <span className="divider">|</span>}
+                  <span>{formData[field] || field}</span>
+                </div>
               ))}
             </div>
-            <div className="social-icons d-flex gap-2 mt-2">
+            <div
+              className={`social-icons d-flex ${selectedTemplate === "modern" ? "justify-content-center" : "gap-2"} mt-2`}
+            >
               {selectedIcons.map((icon, idx) => (
                 <a key={idx} href={icon.inputValue} target="_blank" rel="noopener noreferrer">
                   <div style={{ backgroundColor: icon.color }} className="social-icon">
@@ -541,25 +391,45 @@ const MailSignature = () => {
               ))}
             </div>
             {apps.bannerUrl && (
-              <img src={apps.bannerUrl} alt="Banner" className="mt-2 w-100" />
+              <img
+                src={apps.bannerUrl}
+                alt="Banner"
+                className="mt-2"
+                style={{
+                  maxWidth: selectedTemplate === "modern" ? "100%" : "100%",
+                  margin: selectedTemplate === "modern" ? "0 auto" : "0",
+                }}
+              />
             )}
             {apps.videoUrl && (
               <iframe
                 src={apps.videoUrl}
                 title="Video"
                 className="mt-2"
-                style={{ width: "100%", height: "200px" }}
+                style={{
+                  width: selectedTemplate === "modern" ? "100%" : "100%",
+                  maxWidth: selectedTemplate === "modern" ? "400px" : "100%",
+                  height: "200px",
+                  margin: selectedTemplate === "modern" ? "0 auto" : "0",
+                }}
               />
             )}
             {apps.customButton.text && (
-              <a href={apps.customButton.url} target="_blank" rel="noopener noreferrer">
-                <Button colorScheme="blue" className="mt-2">
-                  {apps.customButton.text}
-                </Button>
-              </a>
+              <div style={{ textAlign: selectedTemplate === "modern" ? "center" : "left" }}>
+                <a href={apps.customButton.url} target="_blank" rel="noopener noreferrer">
+                  <Button colorScheme="blue" className="mt-2">
+                    {apps.customButton.text}
+                  </Button>
+                </a>
+              </div>
             )}
             {apps.disclaimer && (
-              <Text fontSize="sm" color="gray" className="mt-2">
+              <Text
+                fontSize="sm"
+                color="gray"
+                className="mt-2"
+                style={{ textAlign: selectedTemplate === "modern" ? "center" : "left" }}
+              >
                 {apps.disclaimer}
               </Text>
             )}
@@ -570,25 +440,23 @@ const MailSignature = () => {
   };
 
   return (
-    <div className="signature-main-container d-flex ">
+    <div className="signature-main-container d-flex">
       <nav className="sidebar close">
         <div className="menu-bar">
           <div className="menu">
             <ul className="menu-links">
-              {["Detail", "Images", "Social", "Template", "Design", "Apps"].map(
-                (tab) => (
-                  <li
-                    key={tab}
-                    className={`nav-link ${selectedTab === tab ? "active" : ""}`}
-                    onClick={() => setSelectedTab(tab)}
-                  >
-                    <a>
-                      <span className="icon">{tabIcons[tab]}</span>
-                      <span className="text nav-text">{tab}</span>
-                    </a>
-                  </li>
-                )
-              )}
+              {["Detail", "Images", "Social", "Template", "Design", "Apps"].map((tab) => (
+                <li
+                  key={tab}
+                  className={`nav-link ${selectedTab === tab ? "active" : ""}`}
+                  onClick={() => setSelectedTab(tab)}
+                >
+                  <a>
+                    <span className="icon">{tabIcons[tab]}</span>
+                    <span className="text nav-text">{tab}</span>
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -608,9 +476,7 @@ const MailSignature = () => {
                     variant="outlined"
                     className={styles.textField}
                     value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                   <div className="iconContainer pe-4"></div>
                 </div>
@@ -623,9 +489,7 @@ const MailSignature = () => {
                     variant="outlined"
                     className={styles.textField}
                     value={formData.designation}
-                    onChange={(e) =>
-                      setFormData({ ...formData, designation: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
                   />
                   <div className="iconContainer pe-4"></div>
                 </div>
@@ -637,9 +501,7 @@ const MailSignature = () => {
                     label="Company Name"
                     value={formData.company}
                     variant="outlined"
-                    onChange={(e) => {
-                      setFormData({ ...formData, company: e.target.value });
-                    }}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     className={styles.textField}
                   />
                   <div className="iconContainer pe-4"></div>
@@ -651,9 +513,7 @@ const MailSignature = () => {
                       labelId="select-label"
                       id="select"
                       value={formData.selected}
-                      onChange={(e) => {
-                        setFormData({ ...formData, selected: e.target.value });
-                      }}
+                      onChange={(e) => setFormData({ ...formData, selected: e.target.value })}
                       label="Select an Option"
                       className={styles.select}
                     >
@@ -666,7 +526,6 @@ const MailSignature = () => {
                   </FormControl>
                   <div className="iconContainer pe-4"></div>
                 </div>
-
                 {extraFields.map((field, index) => (
                   <div className={styles.inputContainer} key={index}>
                     <TextField
@@ -676,26 +535,17 @@ const MailSignature = () => {
                       label={field}
                       variant="outlined"
                       value={formData[field] || ""}
-                      onChange={(e) => {
-                        setFormData({ ...formData, [field]: e.target.value });
-                      }}
+                      onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
                       className={styles.textField}
                     />
                     <div>
-                      <Delete
-                        className="icon"
-                        onClick={() => handleRemoveField(index)}
-                      />
+                      <Delete className="icon" onClick={() => handleRemoveField(index)} />
                     </div>
                   </div>
                 ))}
                 <div className={styles.inputContainer}>
-                  <p
-                    className={styles.addMoreP}
-                    onClick={() => setShowOptions(!showOptions)}
-                  >
-                    Add More Field{" "}
-                    <RiAddBoxFill size={30} className={styles.addMoreIcon} />
+                  <p className={styles.addMoreP} onClick={() => setShowOptions(!showOptions)}>
+                    Add More Field <RiAddBoxFill size={30} className={styles.addMoreIcon} />
                   </p>
                   {showOptions && (
                     <div className={styles.dropdownContainer}>
@@ -732,129 +582,114 @@ const MailSignature = () => {
               </form>
             </>
           )}
-         {selectedTab === "Images" && (
-          <>
-         <h5>Images</h5>
-           <div className="mail-signature-upload mt-2">
-         <div className="signature-upload-container text-center d-flex my-auto px-3">
-          <div
-          className="signature-preview position-relative"
-          onClick={handleSignatureClick}
-          style={{ cursor: "pointer",  width: "250px",
-              height: "150px",}}
-        >
-          <img
-            src={signaturePreviewUrl || "https://w7.pngwing.com/pngs/945/606/png-transparent-baby-boss-illustration-infant-youtube-animation-sticker-youtube-family-glasses-film.png"}
-            alt="Signature Preview"
-            className="img-fluid"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-             
-            }}
-           
-          />
-           
-          {signaturePreviewUrl && (
-            <div className="overlay position-absolute top-0 start-0 w-200 h-200 d-flex align-items-center justify-content-center">
-              <button
-                type="button"
-                className="btn btn-danger btn-sm"
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent triggering handleSignatureClick
-                  handleDeleteSignature();
-                }}
-               
-              >
-                <BsTrash />
-              </button>
-            </div>
+          {selectedTab === "Images" && (
+            <>
+              <h5>Images</h5>
+              <div className="mail-signature-upload mt-2">
+                <div className="signature-upload-container text-center d-flex my-auto px-3">
+                  <div
+                    className="signature-preview position-relative"
+                    onClick={handleSignatureClick}
+                    style={{ cursor: "pointer", width: "250px", height: "150px" }}
+                  >
+                    <img
+                      src={
+                        signaturePreviewUrl ||
+                        "https://w7.pngwing.com/pngs/945/606/png-transparent-baby-boss-illustration-infant-youtube-animation-sticker-youtube-family-glasses-film.png"
+                      }
+                      alt="Signature Preview"
+                      className="img-fluid"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                    {signaturePreviewUrl && (
+                      <div className="overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                        <button
+                          type="button"
+                          className="btn btn-danger btn-sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteSignature();
+                          }}
+                        >
+                          <BsTrash />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    id="signatureFile"
+                    accept="image/*"
+                    name="signatureFile"
+                    style={{ display: "none" }}
+                    ref={signatureFileInputRef}
+                    onChange={handleSignatureChange}
+                  />
+                </div>
+                {modalIsOpen && (
+                  <Modal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} size="full" isCentered>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalCloseButton />
+                      <ModalBody>
+                        <Cropper
+                          image={imageSrc}
+                          crop={crop}
+                          zoom={zoom}
+                          aspect={1}
+                          onCropChange={setCrop}
+                          onZoomChange={setZoom}
+                          onCropComplete={onCropComplete}
+                          showGrid={false}
+                          style={{
+                            containerStyle: { height: "100%", width: "100%" },
+                            mediaStyle: { objectFit: "contain" },
+                          }}
+                        />
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button colorScheme="blue" onClick={handleCropSave}>
+                          Save
+                        </Button>
+                        <Button variant="outline" onClick={() => setModalIsOpen(false)}>
+                          Cancel
+                        </Button>
+                      </ModalFooter>
+                    </ModalContent>
+                  </Modal>
+                )}
+              </div>
+              <h5 className="mt-5">Select Shape</h5>
+              <div className="shape-container d-flex gap-3">
+                <div className="text-center">
+                  <div
+                    className="circle shape my-2 mx-auto"
+                    onClick={() => setImageShape("circle")}
+                    style={{ borderRadius: "50%" }}
+                  ></div>
+                  <div className="shapep px-2">
+                    <p>Circle</p>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div
+                    className="rectangle shape my-2 mx-auto"
+                    onClick={() => setImageShape("rectangle")}
+                  ></div>
+                  <div className="shapep px-2">
+                    <p>Square</p>
+                  </div>
+                </div>
+              </div>
+            </>
           )}
-        </div>
-        <input
-          type="file"
-          id="signatureFile"
-          accept="image/*"
-          name="signatureFile"
-          style={{ display: "none" }}
-          ref={signatureFileInputRef}
-          onChange={handleSignatureChange}
-        />
-      </div>
-      {modalIsOpen && (
-        <Modal
-          isOpen={modalIsOpen}
-          onClose={() => setModalIsOpen(false)}
-          size="full"
-          isCentered
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalCloseButton />
-            <ModalBody>
-              <Cropper
-                image={imageSrc}
-                crop={crop}
-                zoom={zoom}
-                aspect={1}
-                onCropChange={setCrop}
-                onZoomChange={setZoom}
-                onCropComplete={onCropComplete}
-                showGrid={false}
-                style={{
-                  containerStyle: {
-                    height: "100%",
-                    width: "100%",
-                  },
-                  mediaStyle: {
-                    objectFit: "contain",
-                  },
-                }}
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button colorScheme="blue" onClick={handleCropSave}>
-                Save
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => setModalIsOpen(false)}
-              >
-                Cancel
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      )}
-    </div>
-    <h5 className="mt-5">Select Shape</h5>
-    <div className="shape-container d-flex gap-3">
-      <div className="text-center">
-        <div
-          className="circle shape my-2 mx-auto"
-          onClick={() => setImageShape("circle")}
-          style={{ borderRadius: "50%" }}
-        ></div>
-        <div className="shapep px-2">
-          <p>Circle</p>
-        </div>
-      </div>
-      <div className="text-center">
-        <div
-          className="rectangle shape my-2 mx-auto"
-          onClick={() => setImageShape("rectangle")}
-        ></div>
-        <div className="shapep px-2">
-          <p>Square</p>
-        </div>
-      </div>
-    </div>
-  </>
-)}
           {selectedTab === "Social" && (
             <>
-              <h5> Add Social Media Links</h5>
+              <h5>Add Social Media Links</h5>
               <div className="socialMediaLink mt-5">
                 {selectedIcons.length > 0 && (
                   <>
@@ -863,7 +698,6 @@ const MailSignature = () => {
                         <div
                           style={{
                             backgroundColor: iconData.color,
-
                             border: `1px solid ${iconData.color}`,
                             transition: "transform 0.3s ease",
                           }}
@@ -882,21 +716,14 @@ const MailSignature = () => {
                           className={styles.textField}
                         />
                         <div>
-                          <Delete
-                            className="icon"
-                            onClick={() => handleIconRemove(index)}
-                          />
+                          <Delete className="icon" onClick={() => handleIconRemove(index)} />
                         </div>
                       </div>
                     ))}
                   </>
                 )}
               </div>
-
-              <div
-                className="allSocialMediaIcon mt-5 px-3"
-                style={{ display: "flex", flexWrap: "wrap" }}
-              >
+              <div className="allSocialMediaIcon mt-5 px-3" style={{ display: "flex", flexWrap: "wrap" }}>
                 {socialMediaIcons.map((iconData, index) => (
                   <Tooltip
                     label={iconData.name}
@@ -909,7 +736,6 @@ const MailSignature = () => {
                     <div
                       style={{
                         backgroundColor: iconData.color,
-
                         border: `1px solid ${iconData.color}`,
                         transition: "transform 0.3s ease",
                       }}
@@ -946,58 +772,46 @@ const MailSignature = () => {
           {selectedTab === "Design" && (
             <>
               <h5>Design Options</h5>
-              {/* <FormControl fullWidth sx={{ m: 1 }}>
-                <label>Font Family</label>
-                <Select
-                  value={designOptions.fontFamily}
-                  onChange={(e) => handleDesignChange("fontFamily", e.target.value)}
-                >
-                  <MenuItem value="Poppins">Poppins</MenuItem>
-                  <MenuItem value="Arial">Arial</MenuItem>
-                  <MenuItem value="Times New Roman">Times New Roman</MenuItem>
-                </Select>
-              </FormControl> */}
-               <div className={styles.inputContainer}>
-                  <FormControl fullWidth sx={{ m: 1 }}>
-                    <InputLabel id="select-label">Font Family</InputLabel>
-                    <Select
-                      labelId="select-label"
-                      id="select"
-                      value={formData.selected}
-                      onChange={(e) => handleDesignChange("fontFamily", e.target.value)}
-                      label="Select an Option"
-                     
-                    >
-                      <MenuItem value="">
-                        <em>---Select---</em>
-                      </MenuItem>
-                     <MenuItem value="Poppins">Poppins</MenuItem>
-                  <MenuItem value="Arial">Arial</MenuItem>
-                  <MenuItem value="Times New Roman">Times New Roman</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <div className="iconContainer pe-4"></div>
-                </div>
-             <div className={styles.inputContainer}>  <Box sx={{ mx: 3 }} style={{width:"93%"}} >
-                <p>Font Size: {designOptions.fontSize}px</p>
-                <Slider
-                fullWidth
-                  value={designOptions.fontSize}
-                  onChange={(e, val) => handleDesignChange("fontSize", val)}
-                  min={10}
-                  max={24}
-                  step={1}
-                />
-              </Box></div> 
               <div className={styles.inputContainer}>
-              <TextField
-                fullWidth
-                sx={{ m: 1 }}
-                label="Primary Color"
-                type="color"
-                value={designOptions.primaryColor}
-                onChange={(e) => handleDesignChange("primaryColor", e.target.value)}
-              /></div>
+                <FormControl fullWidth sx={{ m: 1 }}>
+                  <InputLabel id="font-family-label">Font Family</InputLabel>
+                  <Select
+                    labelId="font-family-label"
+                    id="font-family"
+                    value={designOptions.fontFamily}
+                    onChange={(e) => handleDesignChange("fontFamily", e.target.value)}
+                    label="Font Family"
+                    className={styles.select}
+                  >
+                    <MenuItem value="Poppins">Poppins</MenuItem>
+                    <MenuItem value="Arial">Arial</MenuItem>
+                    <MenuItem value="Times New Roman">Times New Roman</MenuItem>
+                  </Select>
+                </FormControl>
+                <div className="iconContainer pe-4"></div>
+              </div>
+              <div className={styles.inputContainer}>
+                <Box sx={{ mx: 3 }} style={{ width: "93%" }}>
+                  <p>Font Size: {designOptions.fontSize}px</p>
+                  <Slider
+                    value={designOptions.fontSize}
+                    onChange={(e, val) => handleDesignChange("fontSize", val)}
+                    min={10}
+                    max={24}
+                    step={1}
+                  />
+                </Box>
+              </div>
+              <div className={styles.inputContainer}>
+                <TextField
+                  fullWidth
+                  sx={{ m: 1 }}
+                  label="Primary Color"
+                  type="color"
+                  value={designOptions.primaryColor}
+                  onChange={(e) => handleDesignChange("primaryColor", e.target.value)}
+                />
+              </div>
               <div className={styles.inputContainer}>
                 <FormControlLabel
                   control={
@@ -1067,7 +881,6 @@ const MailSignature = () => {
         <h1 className="my-2">Create Your Own Email Signature</h1>
         {renderPreview()}
       </div>
-
       <Modal
         blockScrollOnMount={false}
         isOpen={isOpen}
@@ -1085,7 +898,7 @@ const MailSignature = () => {
               <TextField
                 fullWidth
                 sx={{ m: 1 }}
-                id="custom label"
+                id="custom-label"
                 label="Custom Label"
                 value={customFieldLabel}
                 onChange={(e) => setCustomFieldLabel(e.target.value)}
@@ -1098,11 +911,7 @@ const MailSignature = () => {
             <Button size="sm" onClick={onClose} className="cancel">
               Cancel
             </Button>
-            <Button
-              colorScheme="blue"
-              onClick={handleCustomFieldSubmit}
-              className="okay"
-            >
+            <Button colorScheme="blue" onClick={handleCustomFieldSubmit} className="okay">
               Add
             </Button>
           </ModalFooter>
@@ -1147,4 +956,5 @@ const createImage = (url) => {
     image.onerror = (error) => reject(error);
   });
 };
+
 export default MailSignature;
